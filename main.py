@@ -1,18 +1,23 @@
-def get_book_text(filepath):
-    file_contents = filepath.read()
-    return file_contents
+import sys
+
+from stats import get_num_words, sort
 
 
-def count_words(filepath):
-    file_contents = len(filepath.read().split())
-    return file_contents
-
-
-def main():
-    with open("books/frankenstein.txt") as f:
-        # print(get_book_text(f))
-        num_words = count_words(f)
+def main(file):
+    with open(file) as f:
+        book = f.read().lower()
+        num_words = get_num_words(book)
+        print("============ BOOKBOT ============")
+        print(f"Analyzing book found at {file}...")
+        print("----------- Word Count ----------")
         print(f"Found {num_words} total words")
+        print("--------- Character Count -------")
+        sortedBook = sort(book)
+        for item in sortedBook:
+            print(f"{item['char']}: {item['num']}")
 
 
-main()
+if sys.argv == ["main.py"]:
+    raise Exception("Usage: python3 main.py <path_to_book>")
+else:
+    main(sys.argv[1])
